@@ -380,6 +380,7 @@ methodname throws Exception1,Exception2,..,ExceptionN
 > 1.class Thread1 extends Thread{},然后重写run方法
 > 2.class Thread2 implements Runnable{},然后重写run方法
 > 3.class Thread3 implements Callable<Integer>{},然后new FutureTask(thread3),再用new Thread(future)封装。
+
 ```Java
 class Thread1 extends Thread {
     private String name;
