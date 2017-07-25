@@ -171,3 +171,10 @@ lock.unlock();
 > Java 保证volatile关键字保证变量的改变对各个线程是可见的。
 
 ![](https://user-gold-cdn.xitu.io/2017/3/16/7b186c47a7c70457c308dd8e6cf4ec07)
+
+
+### 12.阻塞队列了解吗？怎么使用
+
+![](leanote://file/getImage?fileId=59408aa6ab6441723b000890)
+
+![](leanote://file/getImage?fileId=59408aa6ab6441723b000891)
