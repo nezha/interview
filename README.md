@@ -13,8 +13,10 @@
 - QQ: 1061243497
 - 兴趣: 篮球 读书
 
+## Contribution
 
-## 主要参与人员
 
-[张熠](https://nezhaxiaozi.coding.me)
+[张熠](https://nezhaxiaozi.coding.me)--主要负责整个文档的整理与发布
 [任新维]()
+
+
