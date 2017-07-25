@@ -124,4 +124,20 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 
 > 在java编程语言中，最基本的结构就是两种，一个是数组，另外一个是模拟指针（引用），所有的数据结构都可以用这两个基本结构来构造的，HashMap也不例外。HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
 
+### 9.java.util.concurrent 包下使用过哪些
 
+> 1.阻塞队列 BlockingQueue( `ArrayBlockingQueue`, `DelayQueue`, `LinkedBlockingQueue`, `SynchronousQueue`,`LinkedTransferQueue`,`LinkedBlockingDeque`)
+> 2.`ConcurrentHashMap`
+> 3.`Semaphore`--信号量
+> 4.`CountDownLatch`--闭锁
+> 5.`CyclicBarrier`--栅栏
+> 6.`Exchanger`--交换机
+> 7.`Executor`->`ThreadPoolExecutor`,`ScheduledThreadPoolExecutor`
+
+```java
+Semaphore semaphore = new Semaphore(1);  
+//critical section  
+semaphore.acquire();  
+...  
+semaphore.release();
+```
