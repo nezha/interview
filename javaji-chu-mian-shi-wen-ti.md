@@ -6,6 +6,7 @@
 > java.util.Collection 是一个集合接口。它提供了对集合对象进行基本操作的通用接口方法。
 
 
+```
 Collection
 ├List
 │├LinkedList
@@ -17,6 +18,7 @@ Map
 ├Hashtable
 ├HashMap
 └WeakHashMap
+```
 
 ---
 
