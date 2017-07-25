@@ -90,7 +90,7 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 
 > 3. **扩容机制：原来的两倍**
 
-### 4.熟悉什么算法，还有说说他们的时间复杂度？
+## 4.熟悉什么算法，还有说说他们的时间复杂度？
 
 > [**经典排序算法总结与实现**](http://wuchong.me/blog/2014/02/09/algorithm-sort-summary/)
 
