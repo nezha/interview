@@ -45,7 +45,7 @@ Map
 > （2）与ArrayList相比，在LinkedList中插入、添加和删除一个元素会更快
 > （3）LinkedList比ArrayList消耗更多的内存，因为LinkedList中的每个节点存储了前后节点的引用
 
-### 3.HashMap 底层是怎么实现的？还有什么处理哈希冲突的方法？
+## 3.HashMap 底层是怎么实现的？还有什么处理哈希冲突的方法？
 
 **处理哈希冲突的方法**:
 
