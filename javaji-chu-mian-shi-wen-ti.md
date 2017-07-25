@@ -68,7 +68,7 @@ Map
 
 > [**<font color="red">Java8系列之重新认识HashMap</font>**](http://www.importnew.com/20386.html)
 > **功能实现-方法**
-> 1. 确定哈希桶数组索引位置 :这里的Hash算法本质上就是三步：取key的hashCode值、高位运算、取模运算。
+> 1.确定哈希桶数组索引位置 :这里的Hash算法本质上就是三步：取key的hashCode值、高位运算、取模运算。
 
 ```java
 //方法一：
@@ -84,11 +84,11 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 }
 ```
 
-> 2. 分析HashMap的put方法
+> 2.分析HashMap的put方法
 
 ![](http://tech.meituan.com/img/java-hashmap/hashMap%20put%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
-> 3. **扩容机制：原来的两倍**
+> 3.**扩容机制：原来的两倍**
 
 ## 4.熟悉什么算法，还有说说他们的时间复杂度？
 
@@ -100,23 +100,33 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 ### 5.ArrayList和Vector的底层代码和他们的增长策略,它们是如何进行扩容的？
 
 > ArrayList 默认数组大小是10，其中ensureCapacity扩容，trimToSize容量调整到适中，扩展后数组大小为（(原数组长度*1.5）与传递参数中较大者.
+
 > Vector的扩容，是可以指定扩容因子，同时Vector扩容策略是：1.原来容量的2倍,2.原来容量+扩容参数值。
 
 ### 6.jvm 原理。程序运行区域划分
 
 > 问：Java运行时数据区域？ 
+
 > 回答：包括程序计数器、JVM栈、本地方法栈、方法区、堆
+
 > 问：方法区里存放什么？
+
 > 本地方法栈：和jvm栈所发挥的作用类似，区别是jvm栈为jvm执行java方法（字节码）服务，而本地方法栈为jvm使用的native方法服务。
+
 >  JVM栈：局部变量表、操作数栈、动态链接、方法出口。
+
 >  方法区：用于存储已被虚拟机加载的类信息，常量、静态变量、即时编译器编译后的代码等。
+
 >  堆：存放对象实例。
 
 ### 7.minor GC 与 Full GC 。分别采用哪种垃圾回收算法？简单介绍算法
 
 > GC（或Minor GC）：收集 生命周期短的区域(Young area)。
+
 > Full GC （或Major GC）：收集生命周期短的区域(Young area)和生命周期比较长的区域(Old area)对整个堆进行垃圾收集。
+
 > `新生代`通常存活时间较短基于Copying算法进行回收,将可用内存分为大小相等的两块，每次只使用其中一块；当这一块用完了，就将还活着的对象复制到另一块上，然后把已使用过的内存清理掉。在HotSpot里，考虑到大部分对象存活时间很短将内存分为Eden和两块Survivor，默认比例为8:1:1。代价是存在部分内存空间浪费，适合在新生代使用；
+
 > `老年代`与`新生代`不同，老年代对象存活的时间比较长、比较稳定，因此采用标记(Mark)算法来进行回收,所谓标记就是扫描出存活的对象，然后再进行回收未被标记的对象，回收后对用空出的空间要么进行合并、要么标记出来便于下次进行分配，总之目的就是要减少内存碎片带来的效率损耗。
 在执行机制上JVM提供了串行GC(Serial MSC)、并行GC(Parallel MSC)和并发GC(CMS)。
 
@@ -127,11 +137,17 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 ### 9.java.util.concurrent 包下使用过哪些
 
 > 1.阻塞队列 BlockingQueue( `ArrayBlockingQueue`, `DelayQueue`, `LinkedBlockingQueue`, `SynchronousQueue`,`LinkedTransferQueue`,`LinkedBlockingDeque`)
+
 > 2.`ConcurrentHashMap`
+
 > 3.`Semaphore`--信号量
+
 > 4.`CountDownLatch`--闭锁
+
 > 5.`CyclicBarrier`--栅栏
+
 > 6.`Exchanger`--交换机
+
 > 7.`Executor`->`ThreadPoolExecutor`,`ScheduledThreadPoolExecutor`
 
 ```java
@@ -154,20 +170,26 @@ lock.unlock();
 ### 10.concurrentMap 和 HashMap 区别
 
 > 1.**hashMap可以有null的键**，concurrentMap不可以有 
+
 > 2.hashMap是线程不安全的，在多线程的时候需要Collections.synchronizedMap(hashMap),ConcurrentMap使用了重入锁保证线程安全。 
+
 > 3.在删除元素时候，两者的算法不一样。
+
 > `ConcurrentHashMap`和`Hashtable`主要区别就是围绕着锁的粒度以及如何锁,可以简单理解成把一个大的HashTable分解成多个，形成了锁分离。
 
 
 ### 11.信号量是什么，怎么使用?volatile关键字是什么？
 
 > `信号量-semaphore`：荷兰著名的计算机科学家Dijkstra 于1965年提出的一个同步机制。是在多线程环境下使用的一种设施, 它负责协调各个线程, 以保证它们能够正确、合理的使用公共资源。
+
 > 整形信号量：表示共享资源状态，且只能由特殊的原子操作改变整型量。
+
 > `同步与互斥`：同类进程为互斥关系（打印机问题），不同进程为同步关系(消费者生产者)。
 
 ---
 
 > 使用volatile关键字是解决同步问题的一种有效手段。 java volatile关键字预示着这个变量始终是“存储进入了主存”。更精确的表述就是每一次读一个volatile变量，都会从主存读取，而不是CPU的缓存。同样的道理，每次写一个volatile变量，都是写回主存，而不仅仅是CPU的缓存。
+
 > Java 保证volatile关键字保证变量的改变对各个线程是可见的。
 
 ![](https://user-gold-cdn.xitu.io/2017/3/16/7b186c47a7c70457c308dd8e6cf4ec07)
