@@ -175,6 +175,7 @@ lock.unlock();
 
 ### 12.阻塞队列了解吗？怎么使用
 
-![](leanote://file/getImage?fileId=59408aa6ab6441723b000890)
+![](/assets/java-12-1.png)
 
-![](leanote://file/getImage?fileId=59408aa6ab6441723b000891)
+![](/assets/java-12-2.png)
+
