@@ -646,7 +646,79 @@ JVM栈：局部变量表、操作数栈、动态链接、方法出口。
 ### 41.操作系统如何进行分页调度？--**要考LRU**
 
 > 1.最讲置换原则-OPT
+
 > 2.先进先出原则-FIFO
+
 > 3.最近最少使用置换算法-LRU
+
 > 4.时钟置换算法
 
+```java
+//扩展一下LinkedHashMap这个类，让他实现LRU算法
+class LRULinkedHashMap<K,V> extends LinkedHashMap<K,V>{
+    //定义缓存的容量
+    private int capacity;
+    private static final long serialVersionUID = 1L;
+    //带参数的构造器
+    LRULinkedHashMap(int capacity){
+        //调用LinkedHashMap的构造器，传入以下参数
+        super(16,0.75f,true);
+        //传入指定的缓存最大容量
+        this.capacity=capacity;
+    }
+    //实现LRU的关键方法，如果map里面的元素个数大于了缓存最大容量，则删除链表的顶端元素
+    @Override
+    public boolean removeEldestEntry(Map.Entry<K, V> eldest){
+        System.out.println(eldest.getKey() + "=" + eldest.getValue());
+        return size()>capacity;
+    }
+}
+
+```
+
+### 42.讲讲LinkedHashMap
+
+> [Java8 LinkedHashMap工作原理及实现](http://www.importnew.com/18706.html)
+
+LinkedHashMap是通过哈希表和链表实现的，它通过维护一个链表来保证对哈希表迭代时的有序性，而这个有序是指键值对插入的顺序。
+
+LinkedHashMap 的大致实现如下图所示，当然链表和哈希表中相同的键值对都是指向同一个对象，这里把它们分开来画只是为了呈现出比较清晰的结构。
+
+![](https://cloud.githubusercontent.com/assets/1736354/6981649/03eb9014-da38-11e4-9cbf-03d9c21f05f2.png)
+
+LinkedHashMap是Hash表和链表的实现，并且依靠着双向链表保证了迭代顺序是插入的顺序。
+
+**三个重点实现的函数**
+
+在HashMap中提到了下面的定义：
+
+```java
+// Callbacks to allow LinkedHashMap post-actions
+//1.把当前节点e移至链表的尾部。因为使用的是双向链表，所以在尾部插入可以以O（1）的时间复杂度来完成。并且只有当accessOrder设置为true时，才会执行这个操作。在HashMap的putVal方法中，就调用了这个方法。
+void afterNodeAccess(Node<K,V> p) { }
+//2.afterNodeInsertion方法是在哈希表中插入了一个新节点时调用的，它会把链表的头节点删除掉，删除的方式是通过调用HashMap的removeNode方法。通过afterNodeInsertion方法和afterNodeAccess方法，是不是就可以简单的实现一个基于最近最少使用（LRU）的淘汰策略了？当然，我们还要重写removeEldestEntry方法，因为它默认返回的是false。
+void afterNodeInsertion(boolean evict) { }
+//3.这个方法是当HashMap删除一个键值对时调用的，它会把在HashMap中删除的那个键值对一并从链表中删除，保证了哈希表和链表的一致性。
+void afterNodeRemoval(Node<K,V> p) { }
+```
+
+LinkedHashMap继承于HashMap，因此也重新实现了这3个函数，顾名思义这三个函数的作用分别是：节点访问后、节点插入后、节点移除后做一些事情。
+
+
+### 43.线程同步与阻塞的关系？同步一定阻塞吗？阻塞一定同步吗？,同步和异步有什么区别？
+
+> 同步与非同步：主要是保证**互斥的访问临界资源**的情况
+
+> 阻塞与非阻塞：主要是从 CPU 的消耗上来说的
+
+### 44.int与Integer的区别，分别什么场合使用
+
+```
+1、Integer是int提供的封装类，而int是Java的基本数据类型
+2、Integer默认值是null，而int默认值是0；
+3、声明为Integer的变量需要实例化，而声明为int的变量不需要实例化；
+4、Integer是对象，用一个引用指向这个对象，而int是基本类型，直接存储数值。
+
+```
+
+`int`是基本数据类型，`Integer`是包装类，类似HashMap这样的结构必须使用包装类，因为包装类继承自Object,都需要实现HashCode，所以可以使用在HashMap这类数据结构中。
