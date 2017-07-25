@@ -1,4 +1,4 @@
-### 1.你用过哪些集合类？
+## 你用过哪些集合类？
 
 > [大公司最喜欢问的Java集合类面试题](http://www.codeceo.com/article/java-collection-interview.html)
 > [40个Java集合面试问题和答案](http://www.importnew.com/15980.html)
@@ -38,7 +38,7 @@ Map
 > TreeSet
 > TreeMap(基于红黑树的Map实现)
 
-### 2.你说说 arraylist 和 linkedlist 的区别？
+## 2.你说说 arraylist 和 linkedlist 的区别？
 
 > ArrayList和LinkedList两者都实现了List接口，但是它们之间有些不同。
 > （1）ArrayList是由Array所支持的基于一个索引的数据结构，所以它提供对元素的随机访问
