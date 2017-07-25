@@ -1,4 +1,4 @@
-## 你用过哪些集合类？
+## 1.你用过哪些集合类？
 
 > [大公司最喜欢问的Java集合类面试题](http://www.codeceo.com/article/java-collection-interview.html)
 > [40个Java集合面试问题和答案](http://www.importnew.com/15980.html)
