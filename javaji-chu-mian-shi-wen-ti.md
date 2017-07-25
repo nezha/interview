@@ -227,9 +227,11 @@ private void enqueue(E x) {
 > IO的方式通常分为几种，同步阻塞的BIO、同步非阻塞的NIO、异步非阻塞的AIO
 
 1.**BIO**，同步阻塞式IO，简单理解：一个连接一个线程.BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。 
+
 > 在JDK1.4之前，用Java编写网络请求，都是建立一个ServerSocket，然后，客户端建立Socket时就会询问是否有线程可以处理，如果没有，要么等待，要么被拒绝。即：一个连接，要求Server对应一个处理线程。
 
 2.**NIO**，同步非阻塞IO，简单理解：一个请求一个线程.NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。
+
 > NIO本身是基于事件驱动思想来完成的，其主要想解决的是BIO的大并发问题： 在使用同步I/O的网络应用中，如果要同时处理多个客户端请求，或是在客户端要同时和多个服务器进行通讯，就必须使用多线程来处理。也就是说，将每一个客户端请求分配给一个线程来单独处理。这样做虽然可以达到我们的要求，但同时又会带来另外一个问题。由于每创建一个线程，就要为这个线程分配一定的内存空间（也叫工作存储器），而且操作系统本身也对线程的总数有一定的限制。如果客户端的请求过多，服务端程序可能会因为不堪重负而拒绝客户端的请求，甚至服务器可能会因此而瘫痪。
 
 3.**AIO**，异步非阻塞IO，简单理解：一个有效请求一个线程.AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。 
@@ -237,6 +239,7 @@ private void enqueue(E x) {
 ### 14.类加载机制是怎样的
 
 > JVM中类的装载是由ClassLoader和它的子类来实现的,Java ClassLoader是一个重要的Java运行时系统组件。它负责在运行时查找和装入类文件的类。
+
 > 类加载的五个过程：加载、验证、准备、解析、初始化。
 
 从类被加载到虚拟机内存中开始，到卸御出内存为止，它的整个生命周期分为7个阶段，加载(Loading)、验证(Verification)、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)、卸御(Unloading)。其中验证、准备、解析三个部分统称为连接。
@@ -306,9 +309,9 @@ private void enqueue(E x) {
 
 ### 17.分布式 CAP 了解吗？
 
-> 一致性(Consistency)
-> 可用性(Availability)
-> 分区容忍性(Partition tolerance)
+- 一致性(Consistency)
+- 可用性(Availability)
+- 分区容忍性(Partition tolerance)
 
 ### 18.Java中HashMap的key值要是为类对象则该类需要满足什么条件？
 
@@ -324,7 +327,9 @@ private void enqueue(E x) {
 ### 20.终止线程有几种方式？终止线程标记变量为什么是 valotile 类型？
 
 > 1.线程正常执行完毕，正常结束
+
 > 2.监视某些条件，结束线程的不间断运行
+
 > 3.使用interrupt方法终止线程
 
 在定义exit时，使用了一个Java关键字volatile，这个关键字的目的是使exit同步，也就是说在同一时刻只能由一个线程来修改exit的值
@@ -332,6 +337,7 @@ private void enqueue(E x) {
 ### 21.用过哪些并发的数据结构？ cyclicBarrier 什么功能？信号量作用？数据库读写阻塞怎么解决
 
 - 主要有锁机制，然后基于CAS的concurrent包。
+
 - CyclicBarrier的字面意思是可循环使用（Cyclic）的屏障（Barrier）。它要做的事情是，让一组线程到达一个屏障（也可以叫同步点）时被阻塞，直到最后一个线程到达屏障时，屏障才会开门，所有被屏障拦截的线程才会继续干活。CyclicBarrier默认的构造方法是CyclicBarrier(int parties)，其参数表示屏障拦截的线程数量，每个线程调用await方法告诉CyclicBarrier我已经到达了屏障，然后当前线程被阻塞。
 
 **CountDownLatch的计数器只能使用一次。而CyclicBarrier的计数器可以使用reset() 方法重置。**
@@ -341,15 +347,21 @@ private void enqueue(E x) {
 ### 22.关于抽象类和接口的关系
 
 > 简言之抽象类是一种功能不全的类，接口只是一个抽象方法声明和静态不能被修改的数据的集合，两者都不能被实例化。
+
 > 从某种意义上说，接口是一种特殊形式的抽象类，在java语言中抽象类表示的是一种继承关系，一个类只能继承继承一个抽象类，而一个类却可以实现多个接口。在许多情况下，接口确实可以代替抽象类，如果你不需要刻意表达属性上的继承的话。
 
 ### 23.堆内存和栈内存的区别
 
 > **寄存器**：JVM内部虚拟寄存器，存取速度非常快，程序不可控制。
+
 > **栈**：保存局部变量的值包括：1.保存基本数据类型的值；2.保存引用变量，即堆区对象的引用(指针)。也可以用来保存加载方法时的帧。
+
 > **堆**：用来存放动态产生的数据，比如new出来的对象。注意创建出来的对象只包含属于各自的成员变量，并不包括成员方法。因为同一个类的对象拥有各自的成员变量，存储在各自的堆中，但是他们共享该类的方法，并不是每创建一个对象就把成员方法复制一次。
+
 > **常量池**：JVM为每个已加载的类型维护一个常量池，常量池就是这个类型用到的常量的一个有序集合。包括直接常量(基本类型，String)和对其他类型、方法、字段的符号引用(1)。池中的数据和数组一样通过索引访问。由于常量池包含了一个类型所有的对其他类型、方法、字段的符号引用，所以常量池在Java的动态链接中起了核心作用。常量池存在于堆中。
+
 > **代码段**：用来存放从硬盘上读取的源程序代码。
+
 > **数据段**：用来存放static修饰的静态成员（在java中static的作用就是说明该变量，方法，代码块是属于类的还是属于实例的）。
 
 ![](http://my.csdn.net/uploads/201206/11/1339378152_2914.jpg)
@@ -357,40 +369,52 @@ private void enqueue(E x) {
 ### 24.关于Java文件的内部类的解释？匿名内部类是什么？如何访问在其外面定义的变量？
 
 > [java中的内部类总结](http://www.cnblogs.com/nerxious/archive/2013/01/24/2875649.html)
+
 > 静态内部类不能访问外部类非静态的成员
-###25.关于重载和重写的区别
+
+### 25.关于重载和重写的区别
+
 > 重载是overload，是一个类中同方法名的不同具体实现。然后重写是override，是子类重写父类中的方法。
 
 ### 26.String、StringBuffer与StringBuilder之间区别
 
 > 1.三者在执行速度方面的比较：StringBuilder >  StringBuffer  >  String
+
 >> String：字符串常量
+
 >> StringBuffer：字符创变量
+
 >> StringBuilder：字符创变量
 
 > 2.StringBuilder：线程非安全的,StringBuffer：线程安全的
+
 > **对于三者使用的总结： **
+
 1.如果要操作少量的数据用 = String
+
 2.单线程操作字符串缓冲区 下操作大量数据 = StringBuilder
+
 3.多线程操作字符串缓冲区 下操作大量数据 = StringBuffer
 
 ### 27.运行时异常与一般异常有何异同？常见异常
 
 > Java提供了两类主要的异常:runtime exception和checked exception
+
 > 常见异常：NullPointerException、IndexOutOfBoundsException、ClassNotFoundException，IllegalArgumentException，ClassCastException(数据类型转换异常)
 
 ### 28.error和exception有什么区别?
 
 > error 表示恢复不是不可能但很困难的情况下的一种严重问题。比如说内存溢出。不可能指望程序能处理这样的情况。 
+
 > exception表示一种设计或实现问题。也就是说，它表示如果程序运行正常，从不会发生的情况。
 
 ### 29.Java异常处理机制
 
 ![](http://img.blog.csdn.net/20160326233035366)
 
-> 1.捕获异常：try、catch 和 finally
-> 2.抛出异常
-> 2.1. throws抛出异常
+- 1.捕获异常：try、catch 和 finally
+- 2.抛出异常
+- 2.1. throws抛出异常
 
 ```java
 methodname throws Exception1,Exception2,..,ExceptionN  
@@ -400,12 +424,15 @@ methodname throws Exception1,Exception2,..,ExceptionN
 ### 30.java中有几种方法可以实现一个线程?
 
 > [Java多线程学习（吐血超详细总结）](http://blog.csdn.net/gf771115/article/details/51682561)
+
 > [40个Java多线程问题总结](http://www.codeceo.com/article/40-java-thread-problems.html)
 
 ---
 
 > 1.class Thread1 extends Thread{},然后重写run方法
+
 > 2.class Thread2 implements Runnable{},然后重写run方法
+
 > 3.class Thread3 implements Callable<Integer>{},然后new FutureTask(thread3),再用new Thread(future)封装。
 
 ```java
@@ -492,29 +519,37 @@ class MyCallableThread implements Callable<Integer>{
 ### 31.Java中常用的类，包，接口。
 
 > class: 'Date','System','Calender','Math','ArrayList','HashMap'
+
 > package: 'java.lang','java.util','java.io','java.sql','java.net'
+
 > interface: 'Collection','Map','List','Runnable','Callable'
 
 ### 32.java在处理线程同步时，常用方法有：
 
-> 1、synchronized关键字。
-> 2、Lock显示加锁。
-> 3、信号量Semaphore。
-> 4、CAS算法
-> 5、concurrent包
+- 1、synchronized关键字。
+- 2、Lock显示加锁。
+- 3、信号量Semaphore。
+- 4、CAS算法
+- 5、concurrent包
 
 ### 33.Spring IOC/AOP？
 
-> 回答了IOC/DI、AOP的概念。
+> 回答IOC/DI、AOP的概念。
+
 > AOP（Aspect-OrientedProgramming，面向方面编程），可以说是OOP（Object-Oriented Programing，面向对象编程）的补充和完善。
+
 > OOP引入封装、继承和多态性等概念来建立一种对象层次结构，用以模拟公共行为的一个集合。当我们需要为分散的对象引入公共行为的时候，OOP则显得无能为力。
 也就是说，OOP允许你定义从上到下的关系，但并不适合定义从左到右的关系。例如日志功能。日志代码往往水平地散布在所有对象层次中，而与它所散布到的对象的核心功能毫无关系。
+
 > 对于其他类型的代码，如安全性、异常处理和透明的持续性也是如此。这种散布在各处的无关的代码被称为横切（cross-cutting）代码，
 在OOP设计中，它导致了大量代码的重复，而不利于各个模块的重用。
+
 > 依赖注入(Dependency Injection)和控制反转(Inversion of Control)是同一个概念。
+
 > 当某个角色(可能是一个Java实例，调用者)需要另一个角色(另一个Java实例，被调用者)的协助时，在传统的程序设计过程中，通常由调用者来创建被调用者的实例。
 但在Spring里，创建被调用者的工作不再由调用者来完成，因此称为控制反转;创建被调用者 实例的工作通常由Spring容器来完成，然后注入调用者，因此也称为依赖注入。
 不管是依赖注入，还是控制反转，都说明Spring采用动态、灵活的方式来管理各种对象。对象与对象之间的具体实现互相透明。
+
 > 在理解依赖注入之前，看如下这个问题在各种社会形态里如何解决:一个人(Java实例，调用者)需要一把斧子(Java实例，被调用者)。
 
 ### 34.对JVM的垃圾回收的认识?
@@ -525,16 +560,19 @@ class MyCallableThread implements Callable<Integer>{
 
 > [线程与进程的区别及其通信方式](https://juejin.im/entry/58cb80875c497d0057b6527a)
 > 区别
-1.一个程序至少有一个进程,一个进程至少有一个线程.
-2.进程在执行过程中拥有独立的内存单元，而多个线程共享内存
-3.线程是进程的一个实体,是CPU调度和分派的基本单位
+
+- 1.一个程序至少有一个进程,一个进程至少有一个线程.
+- 2.进程在执行过程中拥有独立的内存单元，而多个线程共享内存
+- 3.线程是进程的一个实体,是CPU调度和分派的基本单位
+
 > 进程间通信
-1.管道（Pipe）及有名管道（named pipe）
-2.信号（Signal）
-3.消息队列（Message）
-4.共享内存
-5.信号量（semaphore）
-6.套接口（Socket）
+
+- 1.管道（Pipe）及有名管道（named pipe）
+- 2.信号（Signal）
+- 3.消息队列（Message）
+- 4.共享内存
+- 5.信号量（semaphore）
+- 6.套接口（Socket）
 
 ### 36.JVM如何GC，新生代，老年代，持久代，都存储哪些东西？
 
@@ -549,8 +587,11 @@ JVM的GC算法有：`引用计数器算法`，`根搜索方法`
 ### 37.JVM分为哪些区，每一个区干吗的？
 
 问：Java运行时数据区域？ 
+
 回答：包括程序计数器、JVM栈、本地方法栈、方法区、堆 
+
 问：方法区里存放什么？ 
+
 本地方法栈：和jvm栈所发挥的作用类似，区别是jvm栈为jvm执行java方法（字节码）服务，而本地方法栈为jvm使用的native方法服务。 
 JVM栈：局部变量表、操作数栈、动态链接、方法出口。 
 方法区：用于存储已被虚拟机加载的类信息，常量、静态变量、即时编译器编译后的代码等。 
@@ -581,3 +622,5 @@ JVM栈：局部变量表、操作数栈、动态链接、方法出口。
 > 2.先进先出原则-FIFO
 > 3.最近最少使用置换算法-LRU
 > 4.时钟置换算法
+
+### 42.
