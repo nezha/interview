@@ -69,21 +69,25 @@ Map
 > [**<font color="red">Java8系列之重新认识HashMap</font>**](http://www.importnew.com/20386.html)
 > **功能实现-方法**
 > 1. 确定哈希桶数组索引位置 :这里的Hash算法本质上就是三步：取key的hashCode值、高位运算、取模运算。
-```Java
-方法一：
+
+```java
+//方法一：
 static final int hash(Object key) {   //jdk1.8 & jdk1.7
      int h;
      // h = key.hashCode() 为第一步 取hashCode值
      // h ^ (h >>> 16)  为第二步 高位参与运算
      return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
-方法二：
+//方法二：
 static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个方法，但是实现原理一样的
      return h & (length-1);  //第三步 取模运算
 }
 ```
+
 > 2. 分析HashMap的put方法
+
 ![](http://tech.meituan.com/img/java-hashmap/hashMap%20put%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+
 > 3. **扩容机制：原来的两倍**
 
 ### 4.熟悉什么算法，还有说说他们的时间复杂度？
