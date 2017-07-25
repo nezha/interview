@@ -203,7 +203,7 @@ public void put(E e) throws InterruptedException {
 
 从`put`方法的实现可以看出，它先获取了锁，并且获取的是可中断锁，然后判断当前元素个数是否等于数组的长度，如果相等，则调用`notFull.await()`进行等待，当被其他线程唤醒时，通过`enqueue(e)`方法插入元素，最后解锁。
 
-```Java
+```java
 /**
 * Inserts element at current put position, advances, and signals.
 * Call only when holding lock.
