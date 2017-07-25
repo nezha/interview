@@ -316,7 +316,7 @@ private void enqueue(E x) {
 
 附图：可以配合使用的收集器组合
 
-![](http://linfengying.com/wp-content/uploads/2016/12/gc.jpg)
+![](/assets/java-16-1.png)
 
 `其他参数`
 
