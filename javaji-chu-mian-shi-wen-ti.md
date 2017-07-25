@@ -95,3 +95,133 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 > [**经典排序算法总结与实现**](http://wuchong.me/blog/2014/02/09/algorithm-sort-summary/)
 
 ![](http://ww1.sinaimg.cn/large/81b78497jw1emncvtdf1qj20u10afn0r.jpg)
+
+
+### 5.ArrayList和Vector的底层代码和他们的增长策略,它们是如何进行扩容的？
+
+> ArrayList 默认数组大小是10，其中ensureCapacity扩容，trimToSize容量调整到适中，扩展后数组大小为（(原数组长度*1.5）与传递参数中较大者.
+> Vector的扩容，是可以指定扩容因子，同时Vector扩容策略是：1.原来容量的2倍,2.原来容量+扩容参数值。
+
+### 6.jvm 原理。程序运行区域划分
+
+> 问：Java运行时数据区域？ 
+> 回答：包括程序计数器、JVM栈、本地方法栈、方法区、堆
+> 问：方法区里存放什么？
+> 本地方法栈：和jvm栈所发挥的作用类似，区别是jvm栈为jvm执行java方法（字节码）服务，而本地方法栈为jvm使用的native方法服务。
+>  JVM栈：局部变量表、操作数栈、动态链接、方法出口。
+>  方法区：用于存储已被虚拟机加载的类信息，常量、静态变量、即时编译器编译后的代码等。
+>  堆：存放对象实例。
+
+### 7.minor GC 与 Full GC 。分别采用哪种垃圾回收算法？简单介绍算法
+
+> GC（或Minor GC）：收集 生命周期短的区域(Young area)。
+> Full GC （或Major GC）：收集生命周期短的区域(Young area)和生命周期比较长的区域(Old area)对整个堆进行垃圾收集。
+> `新生代`通常存活时间较短基于Copying算法进行回收,将可用内存分为大小相等的两块，每次只使用其中一块；当这一块用完了，就将还活着的对象复制到另一块上，然后把已使用过的内存清理掉。在HotSpot里，考虑到大部分对象存活时间很短将内存分为Eden和两块Survivor，默认比例为8:1:1。代价是存在部分内存空间浪费，适合在新生代使用；
+> `老年代`与`新生代`不同，老年代对象存活的时间比较长、比较稳定，因此采用标记(Mark)算法来进行回收,所谓标记就是扫描出存活的对象，然后再进行回收未被标记的对象，回收后对用空出的空间要么进行合并、要么标记出来便于下次进行分配，总之目的就是要减少内存碎片带来的效率损耗。
+在执行机制上JVM提供了串行GC(Serial MSC)、并行GC(Parallel MSC)和并发GC(CMS)。
+
+### 8.HashMap 实现原理
+
+> 在java编程语言中，最基本的结构就是两种，一个是数组，另外一个是模拟指针（引用），所有的数据结构都可以用这两个基本结构来构造的，HashMap也不例外。HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
+
+
+### 9.java.util.concurrent 包下使用过哪些
+
+> 1.阻塞队列 BlockingQueue( `ArrayBlockingQueue`, `DelayQueue`, `LinkedBlockingQueue`, `SynchronousQueue`,`LinkedTransferQueue`,`LinkedBlockingDeque`)
+> 2.`ConcurrentHashMap`
+> 3.`Semaphore`--信号量
+> 4.`CountDownLatch`--闭锁
+> 5.`CyclicBarrier`--栅栏
+> 6.`Exchanger`--交换机
+> 7.`Executor`->`ThreadPoolExecutor`,`ScheduledThreadPoolExecutor`
+
+
+```java
+Semaphore semaphore = new Semaphore(1);  
+//critical section  
+semaphore.acquire();  
+...  
+semaphore.release();
+```
+
+> 8.锁 Lock--`ReentrantLock`,`ReadWriteLock`,`Condition`,`LockSupport`
+
+
+```Java
+Lock lock = new ReentrantLock();  
+lock.lock();  
+//critical section  
+lock.unlock();
+```
+
+### 10.concurrentMap 和 HashMap 区别
+
+> 1.**hashMap可以有null的键**，concurrentMap不可以有 
+> 2.hashMap是线程不安全的，在多线程的时候需要Collections.synchronizedMap(hashMap),ConcurrentMap使用了重入锁保证线程安全。 
+> 3.在删除元素时候，两者的算法不一样。
+> `ConcurrentHashMap`和`Hashtable`主要区别就是围绕着锁的粒度以及如何锁,可以简单理解成把一个大的HashTable分解成多个，形成了锁分离。
+
+### 11.信号量是什么，怎么使用?volatile关键字是什么？
+
+> `信号量-semaphore`：荷兰著名的计算机科学家Dijkstra 于1965年提出的一个同步机制。是在多线程环境下使用的一种设施, 它负责协调各个线程, 以保证它们能够正确、合理的使用公共资源。
+> 整形信号量：表示共享资源状态，且只能由特殊的原子操作改变整型量。
+> `同步与互斥`：同类进程为互斥关系（打印机问题），不同进程为同步关系(消费者生产者)。
+
+---
+
+> 使用volatile关键字是解决同步问题的一种有效手段。 java volatile关键字预示着这个变量始终是“存储进入了主存”。更精确的表述就是每一次读一个volatile变量，都会从主存读取，而不是CPU的缓存。同样的道理，每次写一个volatile变量，都是写回主存，而不仅仅是CPU的缓存。
+> Java 保证volatile关键字保证变量的改变对各个线程是可见的。
+![](https://user-gold-cdn.xitu.io/2017/3/16/7b186c47a7c70457c308dd8e6cf4ec07)
+
+### 12.阻塞队列了解吗？怎么使用
+
+![](leanote://file/getImage?fileId=59408aa6ab6441723b000890)
+
+![](leanote://file/getImage?fileId=59408aa6ab6441723b000891)
+
+> 阻塞队列 (BlockingQueue)是Java util.concurrent包下重要的数据结构，BlockingQueue提供了线程安全的队列访问方式：当阻塞队列进行插入数据时，如果队列已满，线程将会阻塞等待直到队列非满；从阻塞队列取数据时，如果队列已空，线程将会阻塞等待直到队列非空。并发包下很多高级同步类的实现都是基于BlockingQueue实现的。
+
+![](leanote://file/getImage?fileId=59408aa6ab6441723b00088f)
+![](leanote://file/getImage?fileId=59408aa6ab6441723b00088e)
+
+**以ArrayBlockingQueue为例，我们先来看看代码：**
+
+```java
+public void put(E e) throws InterruptedException {
+    if (e == null) throw new NullPointerException();
+    final ReentrantLock lock = this.lock;
+    lock.lockInterruptibly();
+    try {
+        while (count == items.length)
+            notFull.await();
+        enqueue(e);
+    } finally {
+        lock.unlock();
+    }
+}
+```
+
+从`put`方法的实现可以看出，它先获取了锁，并且获取的是可中断锁，然后判断当前元素个数是否等于数组的长度，如果相等，则调用`notFull.await()`进行等待，当被其他线程唤醒时，通过`enqueue(e)`方法插入元素，最后解锁。
+
+```Java
+/**
+* Inserts element at current put position, advances, and signals.
+* Call only when holding lock.
+*/
+private void enqueue(E x) {
+    // assert lock.getHoldCount() == 1;
+    // assert items[putIndex] == null;
+    final Object[] items = this.items;
+    items[putIndex] = x;
+    if (++putIndex == items.length) putIndex = 0;
+    count++;
+    notEmpty.signal();
+}
+```
+
+插入成功后，通过notEmpty唤醒正在等待取元素的线程。
+
+
+
+
+
