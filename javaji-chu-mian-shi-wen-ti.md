@@ -150,3 +150,24 @@ lock.lock();
 //critical section  
 lock.unlock();
 ```
+
+### 10.concurrentMap 和 HashMap 区别
+
+> 1.**hashMap可以有null的键**，concurrentMap不可以有 
+> 2.hashMap是线程不安全的，在多线程的时候需要Collections.synchronizedMap(hashMap),ConcurrentMap使用了重入锁保证线程安全。 
+> 3.在删除元素时候，两者的算法不一样。
+> `ConcurrentHashMap`和`Hashtable`主要区别就是围绕着锁的粒度以及如何锁,可以简单理解成把一个大的HashTable分解成多个，形成了锁分离。
+
+
+### 11.信号量是什么，怎么使用?volatile关键字是什么？
+
+> `信号量-semaphore`：荷兰著名的计算机科学家Dijkstra 于1965年提出的一个同步机制。是在多线程环境下使用的一种设施, 它负责协调各个线程, 以保证它们能够正确、合理的使用公共资源。
+> 整形信号量：表示共享资源状态，且只能由特殊的原子操作改变整型量。
+> `同步与互斥`：同类进程为互斥关系（打印机问题），不同进程为同步关系(消费者生产者)。
+
+---
+
+> 使用volatile关键字是解决同步问题的一种有效手段。 java volatile关键字预示着这个变量始终是“存储进入了主存”。更精确的表述就是每一次读一个volatile变量，都会从主存读取，而不是CPU的缓存。同样的道理，每次写一个volatile变量，都是写回主存，而不仅仅是CPU的缓存。
+> Java 保证volatile关键字保证变量的改变对各个线程是可见的。
+
+![](https://user-gold-cdn.xitu.io/2017/3/16/7b186c47a7c70457c308dd8e6cf4ec07)
