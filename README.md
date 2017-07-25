@@ -16,7 +16,7 @@
 ## Contribution
 
 
-[张熠](https://nezhaxiaozi.coding.me)--主要负责整个文档的整理与发布
+[张熠](https://nezhaxiaozi.coding.me)——主要负责整个文档的整理与发布
 [任新维]()
 
 
