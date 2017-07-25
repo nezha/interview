@@ -145,8 +145,8 @@ semaphore.release();
 > 8.锁 Lock--`ReentrantLock`,`ReadWriteLock`,`Condition`,`LockSupport`
 
 ```java
-//Lock lock = new ReentrantLock();  
-//lock.lock();  
+Lock lock = new ReentrantLock();  
+lock.lock();  
 //critical section  
 lock.unlock();
 ```
