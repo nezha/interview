@@ -19,10 +19,6 @@ Map
 └WeakHashMap
 
 
-````python
-import
-````
-
 ---
 
 > ArrayList、HashMap、TreeMap和HashTable类提供对元素的随机访问。
