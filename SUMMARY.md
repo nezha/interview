@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * [Java相关面试问题](javaji-chu-mian-shi-wen-ti.md)
+* [JVM相关问题](jvmxiang-guan-wen-ti.md)
 * [数据库相关问题](shu-ju-ku-xiang-guan-wen-ti.md)
 * [算法与数据结构](suan-fa-yu-shu-ju-jie-gou.md)
 * [计算机网络](ji-suan-ji-wang-luo.md)
