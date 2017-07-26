@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* [Java相关面试问题](javaji-chu-mian-shi-wen-ti.md)
+* [基础相关面试问题](javaji-chu-mian-shi-wen-ti.md)
 * [JVM相关问题](jvmxiang-guan-wen-ti.md)
 * [Java并发编程问题](javabing-fa-bian-cheng-wen-ti.md)
 * [Redi&缓存相关](redihuan-cun-xiang-guan.md)
